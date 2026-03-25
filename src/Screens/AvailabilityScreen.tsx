@@ -75,10 +75,10 @@ const AvailabilityScreen = () => {
         onPress={() => setRoomType(label)}
         activeOpacity={0.8}
       >
-        <Icon 
-          name={isSelected ? "circle-check" : "circle"} 
-          size={20} 
-          color={isSelected ? "#FFF" : "#9CA3AF"} 
+        <Icon
+          name={isSelected ? "circle-check" : "circle"}
+          size={20}
+          color={isSelected ? "#FFF" : "#9CA3AF"}
         />
         <Text style={[styles.radioText, isSelected && styles.radioTextSelected]}>
           {label}
@@ -96,11 +96,11 @@ const AvailabilityScreen = () => {
       >
         {/* Progress Bar */}
         <View style={styles.progressBarContainer}>
-          <Animated.View 
+          <Animated.View
             style={[
-              styles.progressBar, 
-              { width: (3 / 6) * SCREEN_WIDTH, transform: [{ scaleX: fadeAnim }] } 
-            ]} 
+              styles.progressBar,
+              { width: (3 / 6) * SCREEN_WIDTH, transform: [{ scaleX: fadeAnim }] }
+            ]}
           />
         </View>
 
@@ -111,7 +111,7 @@ const AvailabilityScreen = () => {
               <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                 <Icon name="arrow-left" size={24} color="#18181B" />
               </TouchableOpacity>
-              <Text style={styles.mainHeading}>Step 3 : Availability</Text>
+              <Text style={styles.mainHeading}>Availability</Text>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('FlatmateScreen')}>
               <Text style={styles.skipText}>Skip</Text>
@@ -119,7 +119,7 @@ const AvailabilityScreen = () => {
           </Animated.View>
 
           {/* Section 1: Availability */}
-          <Animated.View style={[styles.section, { opacity: sectionAnims[0], transform: [{ translateY: sectionAnims[0].interpolate({ inputRange:[0,1], outputRange:[20,0] }) }] }]}>
+          <Animated.View style={[styles.section, { opacity: sectionAnims[0], transform: [{ translateY: sectionAnims[0].interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }] }]}>
             <Text style={styles.sectionTitle}>Set the availability</Text>
             <View style={styles.row}>
               <TouchableOpacity style={styles.datePickerCard} onPress={() => setOpenFrom(true)}>
@@ -140,7 +140,7 @@ const AvailabilityScreen = () => {
           </Animated.View>
 
           {/* Section 2: Stay Duration */}
-          <Animated.View style={[styles.section, { opacity: sectionAnims[1], transform: [{ translateY: sectionAnims[1].interpolate({ inputRange:[0,1], outputRange:[20,0] }) }] }]}>
+          <Animated.View style={[styles.section, { opacity: sectionAnims[1], transform: [{ translateY: sectionAnims[1].interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }] }]}>
             <View style={styles.row}>
               <View style={styles.durationCard}>
                 <Text style={styles.inputLabel}>Minimum stay</Text>
@@ -172,7 +172,7 @@ const AvailabilityScreen = () => {
           </Animated.View>
 
           {/* Section 3: Rent */}
-          <Animated.View style={[styles.section, { opacity: sectionAnims[2], transform: [{ translateY: sectionAnims[2].interpolate({ inputRange:[0,1], outputRange:[20,0] }) }] }]}>
+          <Animated.View style={[styles.section, { opacity: sectionAnims[2], transform: [{ translateY: sectionAnims[2].interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }] }]}>
             <Text style={styles.sectionTitle}>What's the monthly rent?</Text>
             <View style={styles.rentInputContainer}>
               <Text style={styles.currencySymbol}>₹</Text>
@@ -188,7 +188,7 @@ const AvailabilityScreen = () => {
           </Animated.View>
 
           {/* Section 4: Room Type */}
-          <Animated.View style={[styles.section, { opacity: sectionAnims[3], transform: [{ translateY: sectionAnims[3].interpolate({ inputRange:[0,1], outputRange:[20,0] }) }] }]}>
+          <Animated.View style={[styles.section, { opacity: sectionAnims[3], transform: [{ translateY: sectionAnims[3].interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }] }]}>
             <Text style={styles.sectionTitle}>What kind of room are you looking for?</Text>
             <View style={styles.radioGroup}>
               {renderRadioOption('Private room')}

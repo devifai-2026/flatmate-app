@@ -1,3 +1,7 @@
+/**
+ * ARCHIVED — superseded by src/navigation/RootNavigator.tsx
+ * Kept for reference only. App.tsx now imports RootNavigator directly.
+ */
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

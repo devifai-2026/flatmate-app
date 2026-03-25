@@ -64,22 +64,22 @@ const SearchingInScreen = () => {
       >
         {/* Progress Bar */}
         <View style={styles.progressBarContainer}>
-          <Animated.View 
+          <Animated.View
             style={[
-              styles.progressBar, 
-              { width: (6 / 6) * SCREEN_WIDTH, transform: [{ scaleX: fadeAnim }] } 
-            ]} 
+              styles.progressBar,
+              { width: (6 / 6) * SCREEN_WIDTH, transform: [{ scaleX: fadeAnim }] }
+            ]}
           />
         </View>
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {/* Top Bar */}
-           <Animated.View style={[styles.topBar, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
+          <Animated.View style={[styles.topBar, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
             <View style={styles.topBarLeft}>
               <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                 <Icon name="arrow-left" size={24} color="#18181B" />
               </TouchableOpacity>
-              <Text style={styles.mainHeading}>Step 6 : Searching in</Text>
+              <Text style={styles.mainHeading}>Searching in</Text>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('ProfilePreviewScreen')}>
               <Text style={styles.skipText}>Skip</Text>
@@ -88,12 +88,12 @@ const SearchingInScreen = () => {
 
           {/* Inputs */}
           <View style={styles.inputsContainer}>
-            <Animated.View 
+            <Animated.View
               style={[
-                styles.inputBlock, 
-                { 
-                  opacity: inputAnims[0], 
-                  transform: [{ translateY: inputAnims[0].interpolate({ inputRange:[0,1], outputRange:[20,0] }) }] 
+                styles.inputBlock,
+                {
+                  opacity: inputAnims[0],
+                  transform: [{ translateY: inputAnims[0].interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }]
                 }
               ]}
             >
@@ -107,12 +107,12 @@ const SearchingInScreen = () => {
               />
             </Animated.View>
 
-            <Animated.View 
+            <Animated.View
               style={[
-                styles.inputBlock, 
-                { 
-                  opacity: inputAnims[1], 
-                  transform: [{ translateY: inputAnims[1].interpolate({ inputRange:[0,1], outputRange:[20,0] }) }] 
+                styles.inputBlock,
+                {
+                  opacity: inputAnims[1],
+                  transform: [{ translateY: inputAnims[1].interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }]
                 }
               ]}
             >

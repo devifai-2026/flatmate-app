@@ -81,10 +81,10 @@ const FlatmateScreen = () => {
         onPress={() => setPreferredGender(label)}
         activeOpacity={0.8}
       >
-        <Icon 
-          name={isSelected ? "circle-check" : "circle"} 
-          size={20} 
-          color={isSelected ? "#FFF" : "#9CA3AF"} 
+        <Icon
+          name={isSelected ? "circle-check" : "circle"}
+          size={20}
+          color={isSelected ? "#FFF" : "#9CA3AF"}
         />
         <Text style={[styles.radioText, isSelected && styles.radioTextSelected]}>
           {label}
@@ -102,11 +102,11 @@ const FlatmateScreen = () => {
       >
         {/* Progress Bar */}
         <View style={styles.progressBarContainer}>
-          <Animated.View 
+          <Animated.View
             style={[
-              styles.progressBar, 
-              { width: (4 / 6) * SCREEN_WIDTH, transform: [{ scaleX: fadeAnim }] } 
-            ]} 
+              styles.progressBar,
+              { width: (4 / 6) * SCREEN_WIDTH, transform: [{ scaleX: fadeAnim }] }
+            ]}
           />
         </View>
 
@@ -117,7 +117,7 @@ const FlatmateScreen = () => {
               <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                 <Icon name="arrow-left" size={24} color="#18181B" />
               </TouchableOpacity>
-              <Text style={styles.mainHeading}>Step 4 : Flatmate</Text>
+              <Text style={styles.mainHeading}>Flatmate</Text>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('SearchingInScreen')}>
               <Text style={styles.skipText}>Skip</Text>
@@ -125,7 +125,7 @@ const FlatmateScreen = () => {
           </Animated.View>
 
           {/* Section 1: Preferred Living Partner */}
-          <Animated.View style={[styles.section, { opacity: sectionAnims[0], transform: [{ translateY: sectionAnims[0].interpolate({ inputRange:[0,1], outputRange:[20,0] }) }] }]}>
+          <Animated.View style={[styles.section, { opacity: sectionAnims[0], transform: [{ translateY: sectionAnims[0].interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }] }]}>
             <Text style={styles.sectionTitle}>Who would you prefer to live with?</Text>
             <View style={styles.radioGroupVertical}>
               {renderRadioOption('Male')}
@@ -135,7 +135,7 @@ const FlatmateScreen = () => {
           </Animated.View>
 
           {/* Section 2: Age Group */}
-          <Animated.View style={[styles.section, { opacity: sectionAnims[1], transform: [{ translateY: sectionAnims[1].interpolate({ inputRange:[0,1], outputRange:[20,0] }) }] }]}>
+          <Animated.View style={[styles.section, { opacity: sectionAnims[1], transform: [{ translateY: sectionAnims[1].interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }] }]}>
             <Text style={styles.sectionTitle}>What's your preferred age group?</Text>
             <View style={styles.row}>
               <View style={styles.inputContainer}>
@@ -162,7 +162,7 @@ const FlatmateScreen = () => {
           </Animated.View>
 
           {/* Section 3: Compatible With */}
-          <Animated.View style={[styles.section, { opacity: sectionAnims[2], transform: [{ translateY: sectionAnims[2].interpolate({ inputRange:[0,1], outputRange:[20,0] }) }] }]}>
+          <Animated.View style={[styles.section, { opacity: sectionAnims[2], transform: [{ translateY: sectionAnims[2].interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }] }]}>
             <Text style={styles.sectionTitle}>Compatible with</Text>
             <View style={styles.pillsContainer}>
               {COMPATIBILITY_OPTIONS.map((option) => {
@@ -174,11 +174,11 @@ const FlatmateScreen = () => {
                     onPress={() => toggleCompatibility(option)}
                     activeOpacity={0.7}
                   >
-                    <Icon 
-                      name={isSelected ? "check" : "plus"} 
-                      size={14} 
-                      color={isSelected ? "#FFF" : "#038C98"} 
-                      style={styles.pillIcon} 
+                    <Icon
+                      name={isSelected ? "check" : "plus"}
+                      size={14}
+                      color={isSelected ? "#FFF" : "#038C98"}
+                      style={styles.pillIcon}
                     />
                     <Text style={[styles.pillText, isSelected && styles.pillTextSelected]}>
                       {option}

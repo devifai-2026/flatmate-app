@@ -17,10 +17,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-const SettingRow = ({ icon, label, bg, color, index, isLogout }: { 
-  icon?: string; 
-  label: string; 
-  bg?: string; 
+const SettingRow = ({ icon, label, bg, color, index, isLogout }: {
+  icon?: string;
+  label: string;
+  bg?: string;
   color?: string;
   index: number;
   isLogout?: boolean;
@@ -106,23 +106,23 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#FDF5F5" />
-      <ScrollView 
+      <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
         {/* Profile Card */}
         <Animated.View style={[styles.profileCard, { opacity: sectionFade, transform: [{ translateY: sectionSlide }] }]}>
           <View style={styles.avatarContainer}>
-            <Animated.Image 
-              source={{ uri: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200' }} 
-              style={[styles.avatar, { transform: [{ scale: avatarScale }] }]} 
+            <Animated.Image
+              source={{ uri: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200' }}
+              style={[styles.avatar, { transform: [{ scale: avatarScale }] }]}
             />
             <TouchableOpacity style={styles.editCameraBtn}>
               <Icon name="camera" size={14} color="#FFF" />
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.name}>Charul B.</Text>
+          <Text style={styles.name}>Sayan.</Text>
           <Text style={styles.subtitle}>Student, Female</Text>
 
           <View style={styles.statsRow}>
@@ -150,8 +150,8 @@ const ProfileScreen = () => {
         {/* My Listings Section */}
         <Animated.View style={[styles.section, { opacity: sectionFade, transform: [{ translateY: sectionSlide }] }]}>
           <Text style={styles.sectionHeading}>My Listings</Text>
-          <ScrollView 
-            horizontal 
+          <ScrollView
+            horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.listingsScroll}
           >
@@ -170,7 +170,7 @@ const ProfileScreen = () => {
         {/* About Me Section */}
         <Animated.View style={[styles.aboutCard, { opacity: sectionFade, transform: [{ translateY: sectionSlide }] }]}>
           <Text style={styles.sectionHeadingSmall}>About Me</Text>
-          
+
           <Text style={styles.aboutLabel}>Interests</Text>
           <View style={styles.interestsRow}>
             {['Vegan', 'Night owl', 'Travel', 'Music', 'Dancing'].map((item) => (
@@ -187,7 +187,7 @@ const ProfileScreen = () => {
         {/* Settings Section */}
         <Animated.View style={[styles.settingsCard, { opacity: sectionFade, transform: [{ translateY: sectionSlide }] }]}>
           <Text style={styles.settingsHeader}>Settings</Text>
-          
+
           <SettingRow index={0} label="Notifications" icon="notifications" bg="rgba(255, 165, 0, 0.1)" color="#FFA500" />
           <SettingRow index={1} label="Privacy" icon="lock-closed" bg="rgba(0, 122, 255, 0.1)" color="#007AFF" />
           <SettingRow index={2} label="Help & Support" icon="help-circle" bg="rgba(3, 140, 152, 0.1)" color="#038C98" />

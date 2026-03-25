@@ -78,11 +78,11 @@ const InterestsScreen = () => {
       >
         {/* Progress Bar */}
         <View style={styles.progressBarContainer}>
-          <Animated.View 
+          <Animated.View
             style={[
-              styles.progressBar, 
-              { width: (2 / 6) * SCREEN_WIDTH, transform: [{ scaleX: fadeAnim }] } 
-            ]} 
+              styles.progressBar,
+              { width: (2 / 6) * SCREEN_WIDTH, transform: [{ scaleX: fadeAnim }] }
+            ]}
           />
         </View>
 
@@ -93,7 +93,7 @@ const InterestsScreen = () => {
               <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                 <Icon name="arrow-left" size={24} color="#18181B" />
               </TouchableOpacity>
-              <Text style={styles.mainHeading}>Step 2 : My interests</Text>
+              <Text style={styles.mainHeading}>My interests</Text>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('AvailabilityScreen')}>
               <Text style={styles.skipText}>Skip</Text>
@@ -123,11 +123,11 @@ const InterestsScreen = () => {
                     onPress={() => toggleInterest(interest)}
                     activeOpacity={0.7}
                   >
-                    <Icon 
-                      name={isSelected ? "check" : "plus"} 
-                      size={14} 
-                      color={isSelected ? "#FFF" : "#6B7280"} 
-                      style={styles.pillIcon} 
+                    <Icon
+                      name={isSelected ? "check" : "plus"}
+                      size={14}
+                      color={isSelected ? "#FFF" : "#6B7280"}
+                      style={styles.pillIcon}
                     />
                     <Text style={[styles.pillText, isSelected && styles.pillTextSelected]}>
                       {interest}

@@ -10,19 +10,105 @@ import {
   Platform,
   Dimensions,
   Animated,
+  Pressable,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-function SkipLink({ onPress }: { onPress: () => void }) {
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <Text style={styles.skipText}>Skip</Text>
-    </TouchableOpacity>
-  );
-}
+
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+const SelectionChip = ({ 
+  label, 
+  isSelected, 
+  onPress 
+}: { 
+  label: string; 
+  isSelected: boolean; 
+  onPress: () => void 
+}) => {
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    if (isSelected) {
+      Animated.spring(scaleAnim, {
+        toValue: 0.95,
+        useNativeDriver: true,
+      }).start(() => {
+        Animated.spring(scaleAnim, {
+          toValue: 1,
+          friction: 3,
+          useNativeDriver: true,
+        }).start();
+      });
+    }
+  }, [isSelected]);
+
+  return (
+    <AnimatedPressable
+      onPress={onPress}
+      style={[
+        styles.chip,
+        isSelected && styles.chipSelected,
+        { transform: [{ scale: scaleAnim }] }
+      ]}
+    >
+      <Icon
+        name={isSelected ? "circle-check" : "circle"}
+        size={18}
+        color={isSelected ? "#038C98" : "#9CA3AF"}
+      />
+      <Text style={[styles.chipText, isSelected && styles.chipTextSelected]}>
+        {label}
+      </Text>
+    </AnimatedPressable>
+  );
+};
+
+const MUIButton = ({ 
+  label, 
+  onPress, 
+  icon, 
+  variant = 'contained' 
+}: { 
+  label: string; 
+  onPress: () => void; 
+  icon?: string;
+  variant?: 'contained' | 'outlined'
+}) => {
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+
+  const onPressIn = () => {
+    Animated.spring(scaleAnim, { toValue: 0.97, useNativeDriver: true }).start();
+  };
+  const onPressOut = () => {
+    Animated.spring(scaleAnim, { toValue: 1, friction: 4, useNativeDriver: true }).start();
+  };
+
+  return (
+    <AnimatedPressable
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      onPress={onPress}
+      style={[
+        styles.muiBtn,
+        variant === 'contained' ? styles.muiBtnContained : styles.muiBtnOutlined,
+        { transform: [{ scale: scaleAnim }] }
+      ]}
+    >
+      <Text style={[
+        styles.muiBtnText,
+        variant === 'contained' ? styles.muiBtnTextContained : styles.muiBtnTextOutlined
+      ]}>
+        {label}
+      </Text>
+      {icon && <Icon name={icon} size={16} color={variant === 'contained' ? "#FFF" : "#038C98"} style={{ marginLeft: 8 }} />}
+    </AnimatedPressable>
+  );
+};
 
 const AboutMeScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
@@ -35,7 +121,7 @@ const AboutMeScreen = () => {
 
   // Animation values
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(20)).current;
+  const slideAnim = useRef(new Animated.Value(30)).current;
   const questionAnims = useRef([
     new Animated.Value(0),
     new Animated.Value(0),
@@ -44,7 +130,6 @@ const AboutMeScreen = () => {
   ]).current;
 
   useEffect(() => {
-    // Basic entrance animation
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 1,
@@ -58,43 +143,19 @@ const AboutMeScreen = () => {
       }),
     ]).start();
 
-    // Staggered entrance for questions
     const staggeredAnims = questionAnims.map((anim, index) =>
       Animated.timing(anim, {
         toValue: 1,
         duration: 600,
-        delay: 200 + index * 150,
+        delay: 300 + index * 120,
         useNativeDriver: true,
       })
     );
-    Animated.stagger(150, staggeredAnims).start();
+    Animated.stagger(100, staggeredAnims).start();
   }, []);
 
   const handleSelect = (key: string, value: boolean) => {
     setAnswers({ ...answers, [key]: value });
-  };
-
-  const renderRadioOption = (key: string, label: string, value: boolean) => {
-    const isSelected = answers[key] === value;
-    return (
-      <TouchableOpacity
-        style={[
-          styles.radioTile,
-          isSelected && styles.radioTileSelected
-        ]}
-        onPress={() => handleSelect(key, value)}
-        activeOpacity={0.8}
-      >
-        <Icon 
-          name={isSelected ? "circle-check" : "circle"} 
-          size={20} 
-          color={isSelected ? "#FFFFFF" : "#9CA3AF"} 
-        />
-        <Text style={[styles.radioText, isSelected && styles.radioTextSelected]}>
-          {label}
-        </Text>
-      </TouchableOpacity>
-    );
   };
 
   const questions = [
@@ -106,30 +167,28 @@ const AboutMeScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
-      <StatusBar barStyle="dark-content" backgroundColor="#FDF5F5" />
+      <StatusBar barStyle="dark-content" backgroundColor="#F8FAFB" />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
         {/* Progress Bar */}
         <View style={styles.progressBarContainer}>
-          <Animated.View 
+          <Animated.View
             style={[
-              styles.progressBar, 
-              { width: (1 / 6) * SCREEN_WIDTH, transform: [{ scaleX: fadeAnim }] } 
-            ]} 
+              styles.progressBar,
+              { width: (1 / 6) * SCREEN_WIDTH, opacity: fadeAnim }
+            ]}
           />
         </View>
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {/* Top Bar */}
           <Animated.View style={[styles.topBar, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
-            <View style={styles.topBarLeft}>
-              <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                <Icon name="arrow-left" size={24} color="#18181B" />
-              </TouchableOpacity>
-              <Text style={styles.mainHeading}>Step 1 : About me</Text>
-            </View>
+            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+              <Icon name="chevron-left" size={20} color="#18181B" />
+            </TouchableOpacity>
+            <Text style={styles.mainHeading}>About me</Text>
             <TouchableOpacity onPress={() => navigation.navigate('InterestsScreen')}>
               <Text style={styles.skipText}>Skip</Text>
             </TouchableOpacity>
@@ -138,25 +197,33 @@ const AboutMeScreen = () => {
           {/* Question Blocks */}
           <View style={styles.questionsContainer}>
             {questions.map((q, index) => (
-              <Animated.View 
-                key={q.key} 
+              <Animated.View
+                key={q.key}
                 style={[
-                  styles.questionBlock, 
-                  { 
+                  styles.questionBlock,
+                  {
                     opacity: questionAnims[index],
-                    transform: [{ 
+                    transform: [{
                       translateY: questionAnims[index].interpolate({
                         inputRange: [0, 1],
-                        outputRange: [30, 0]
-                      }) 
-                    }] 
+                        outputRange: [20, 0]
+                      })
+                    }]
                   }
                 ]}
               >
                 <Text style={styles.questionText}>{q.text}</Text>
                 <View style={styles.radioGroup}>
-                  {renderRadioOption(q.key, 'Yes', true)}
-                  {renderRadioOption(q.key, 'No', false)}
+                  <SelectionChip 
+                    label="Yes" 
+                    isSelected={answers[q.key] === true} 
+                    onPress={() => handleSelect(q.key, true)} 
+                  />
+                  <SelectionChip 
+                    label="No" 
+                    isSelected={answers[q.key] === false} 
+                    onPress={() => handleSelect(q.key, false)} 
+                  />
                 </View>
               </Animated.View>
             ))}
@@ -165,14 +232,12 @@ const AboutMeScreen = () => {
           <View style={styles.spacer} />
 
           {/* Continue Button */}
-          <Animated.View style={{ opacity: fadeAnim }}>
-            <TouchableOpacity
-              style={styles.continueButton}
-              onPress={() => navigation.navigate('InterestsScreen')}
-            >
-              <Text style={styles.continueButtonText}>Continue</Text>
-              <Icon name="arrow-right" size={16} color="#FFF" style={{ marginLeft: 8 }} />
-            </TouchableOpacity>
+          <Animated.View style={{ opacity: fadeAnim, paddingBottom: 20 }}>
+            <MUIButton 
+              label="Continue" 
+              icon="arrow-right"
+              onPress={() => navigation.navigate('InterestsScreen')} 
+            />
           </Animated.View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -183,120 +248,140 @@ const AboutMeScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FDF5F5',
+    backgroundColor: '#F8FAFB',
   },
   container: {
     flex: 1,
   },
   progressBarContainer: {
-    height: 6,
+    height: 4,
     backgroundColor: '#E5E7EB',
     width: '100%',
   },
   progressBar: {
     height: '100%',
     backgroundColor: '#038C98',
-    borderTopRightRadius: 3,
-    borderBottomRightRadius: 3,
+    borderTopRightRadius: 2,
+    borderBottomRightRadius: 2,
   },
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: 24,
-    paddingBottom: 40,
   },
   topBar: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 30,
-  },
-  topBarLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 16,
+    paddingVertical: 24,
   },
   backButton: {
-    padding: 4,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
   },
   mainHeading: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: '800',
-    color: '#18181B',
+    color: '#1A1A1A',
     letterSpacing: -0.5,
   },
   skipText: {
     fontSize: 16,
-    color: '#038C98',
+    color: '#94A3B8',
     fontWeight: '600',
   },
   questionsContainer: {
     marginTop: 10,
-    gap: 32,
+    gap: 28,
   },
   questionBlock: {
-    gap: 14,
+    gap: 16,
   },
   questionText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
-    color: '#18181B',
+    color: '#1A1A1A',
+    opacity: 0.9,
   },
   radioGroup: {
     flexDirection: 'row',
-    gap: 16,
+    gap: 14,
   },
-  radioTile: {
+  // Chip Styles
+  chip: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 14,
-    borderRadius: 16,
+    borderRadius: 14,
     backgroundColor: '#FFFFFF',
     borderWidth: 1.5,
-    borderColor: '#E5E7EB',
+    borderColor: '#F1F5F9',
     gap: 10,
-    // Shadows
+    elevation: 3,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    elevation: 2,
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
   },
-  radioTileSelected: {
-    backgroundColor: '#038C98',
+  chipSelected: {
+    backgroundColor: '#F0FDFA',
     borderColor: '#038C98',
   },
-  radioText: {
+  chipText: {
     fontSize: 16,
-    color: '#4B5563',
-    fontWeight: '600',
+    color: '#64748B',
+    fontWeight: '700',
   },
-  radioTextSelected: {
-    color: '#FFFFFF',
+  chipTextSelected: {
+    color: '#038C98',
   },
   spacer: {
     flex: 1,
-    minHeight: 60,
+    minHeight: 80,
   },
-  continueButton: {
-    backgroundColor: '#038C98',
-    borderRadius: 16,
+  // MUI Style Button
+  muiBtn: {
     height: 56,
-    width: '100%',
+    borderRadius: 12,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#038C98',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
+    paddingHorizontal: 24,
   },
-  continueButtonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
+  muiBtnContained: {
+    backgroundColor: '#038C98',
+    elevation: 6,
+    shadowColor: '#038C98',
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 6 },
+  },
+  muiBtnOutlined: {
+    backgroundColor: 'transparent',
+    borderWidth: 1.5,
+    borderColor: '#038C98',
+  },
+  muiBtnText: {
+    fontSize: 16,
     fontWeight: '800',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
+  muiBtnTextContained: {
+    color: '#FFFFFF',
+  },
+  muiBtnTextOutlined: {
+    color: '#038C98',
   },
 });
 

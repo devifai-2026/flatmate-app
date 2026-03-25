@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^3.0.1",
+    "@react-native-clipboard/clipboard": "^1.16.3",
     "@react-native-community/slider": "^5.1.2",
     "@react-native/new-app-screen": "0.84.1",
     "@react-navigation/bottom-tabs": "^7.15.6",
@@ -28,6 +29,7 @@
     "react-native-linear-gradient": "^2.8.3",
     "react-native-otp-input": "^1.0.12",
     "react-native-phone-number-input": "^2.1.0",
+    "react-native-razorpay": "^2.3.1",
     "react-native-safe-area-context": "^5.7.0",
     "react-native-screens": "^4.24.0",
     "react-native-spinkit": "^1.5.1",
@@ -35,7 +37,8 @@
     "react-native-video": "^6.19.1",
     "react-redux": "^9.2.0",
     "redux-logger": "^3.0.6",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "socket.io-client": "^4.8.3"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
